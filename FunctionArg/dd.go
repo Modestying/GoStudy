@@ -1,6 +1,5 @@
 package main
 
-import "fmt"
 
 //class Player:
 //Must:
@@ -74,5 +73,4 @@ func NewPlayer(opts ...HairOption) *Player {
 }
 
 func TestPlayer() {
-	fmt.Println(NewPlayer([]HairOption{WithColor("red"), WithModel(1)}...))
 }

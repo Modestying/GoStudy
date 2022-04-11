@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 const (
 	CommonCart = "common"
 	BuyNowCart = "buyNow"
@@ -64,13 +62,12 @@ func NewConnection(host string, opts ...DialOption) *ClientConn {
 	return client
 }
 func main() {
-	opts := []DialOption{
-		WithInsecure(),
-		WithTransType("tcp"),
-	}
+	//opts := []DialOption{
+	//	WithInsecure(),
+	//	WithTransType("tcp"),
+	//}
+	//
+	//dd := NewConnection("192", opts...)
+	//fmt.Println(NewPlayer([]HairOption{WithColor("red"), WithModel(1)}...))
 
-	dd := NewConnection("192", opts...)
-	fmt.Println(dd.host, "  ", dd.opts)
-
-	TestPlayer()
 }
