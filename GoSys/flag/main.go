@@ -3,12 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-<<<<<<< HEAD
-)
-
-var port int
-
-=======
 	"net"
 )
 
@@ -27,7 +21,7 @@ func process(conn net.Conn) {
 }
 
 var port int
->>>>>>> 79c80fe8d9a2d65a5658929b37030fc2c2eed42a
+
 func init() {
 	flag.IntVar(&port, "port", 1234, "Just for demo")
 }
@@ -40,25 +34,5 @@ func main() {
 		fmt.Printf("arg[%d]=%s\n", i, flag.Arg(i))
 	}
 	fmt.Println("port=", port)
-<<<<<<< HEAD
-=======
-	//// 监听TCP 服务端口
-	//listener, err := net.Listen("tcp", "0.0.0.0:"+strconv.Itoa(port))
-	//if err != nil {
-	//	fmt.Println("Listen tcp server failed,err:", err)
-	//	return
-	//}
-	//
-	//for {
-	//	// 建立socket连接
-	//	conn, err := listener.Accept()
-	//	if err != nil {
-	//		fmt.Println("Listen.Accept failed,err:", err)
-	//		continue
-	//	}
-	//
-	//	// 业务处理逻辑
-	//	go process(conn)
-	//}
->>>>>>> 79c80fe8d9a2d65a5658929b37030fc2c2eed42a
+
 }
