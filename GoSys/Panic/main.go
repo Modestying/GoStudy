@@ -5,19 +5,36 @@ import (
 	"fmt"
 )
 
+//Panic: every goroutine must set recover(eg1).If not , panic(error) will back to goroutine's father thread(eg2)
 func main() {
-	TestPanic()
-	fmt.Println("a")
+	//eg1
+	//TestPanicWithRecover()
+
+	//eg2
+	//defer func() {
+	//	if r := recover(); r != nil {
+	//		fmt.Println(r.(error).Error())
+	//	}
+	//}()
+	//PanicWithoutPanic()
+
+	fmt.Println("Main end")
 }
 
-func TestPanic() {
+func PanicWithRecover() {
 	defer func() {
 		if r := recover(); r != nil {
-			fmt.Println("ss")
+			fmt.Println(r.(error).Error())
 		}
 	}()
 
-	err := errors.New("dd")
+	err := errors.New("PanicWithRecover")
+	panic(err)
+	return
+}
+
+func PanicWithoutPanic() {
+	err := errors.New("PanicWithoutPanic")
 	panic(err)
 	return
 }
