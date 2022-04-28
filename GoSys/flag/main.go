@@ -21,12 +21,30 @@ func process(conn net.Conn) {
 }
 
 var port int
-
+var testBool bool
 func init() {
-	flag.IntVar(&port, "port", 1234, "Just for demo")
+	flag.IntVar(&port, "port", 1234, "tcp port")
+	flag.BoolVar(&testBool,"open",false,"Open tcp?")
 }
-
+//-flag //只支持bool类型
+//-flag=x
+//-flag x //只支持非bool类型
 // ./main.exe 1 2 "third" --port=15
+
+/*
+$ ./main.exe -port 56 -open
+args=[], num=0
+port= 56
+Open  true
+*/
+
+/*
+$ ./main.exe -port 56
+args=[], num=0
+port= 56
+Open  false
+*/
+
 func main() {
 	flag.Parse()
 	fmt.Printf("args=%s, num=%d\n", flag.Args(), flag.NArg())
@@ -34,5 +52,5 @@ func main() {
 		fmt.Printf("arg[%d]=%s\n", i, flag.Arg(i))
 	}
 	fmt.Println("port=", port)
-
+	fmt.Println("Open ",testBool)
 }
