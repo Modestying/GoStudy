@@ -38,6 +38,4 @@ func main() {
 	go ElegantClose(&wait)
 	wait.Wait()
 	fmt.Println("Service Exit")
-
-
 }

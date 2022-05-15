@@ -1,73 +1,37 @@
 package main
 
-const (
-	CommonCart = "common"
-	BuyNowCart = "buyNow"
-)
+import "fmt"
 
-type dialOptions struct {
-	insecure  bool
-	transport string
+type A struct {
+	Name string
 }
 
-type ClientConn struct {
-	host string
-	opts dialOptions
+func (a *A) Do() {
+	fmt.Println("A* do")
+	a.Name = "a+"
 }
 
-type DialOption interface {
-	apply(options *dialOptions)
+type B struct {
+	Name string
 }
 
-//emptyDialOption kong de
-type emptyDialOption struct{}
-
-func (emptyDialOption) apply(options *dialOptions) {}
-
-// useful
-type funcDialOption struct {
-	f func(options *dialOptions)
+func (b B) Do() {
+	fmt.Println("B do")
+	b.Name = "b+"
 }
 
-func (fdo *funcDialOption) apply(do *dialOptions) {
-	fdo.f(do)
-}
-
-func NewFuncDialOption(f func(options *dialOptions)) DialOption {
-	return &funcDialOption{
-		f: f,
-	}
-}
-
-func WithInsecure() DialOption {
-	return NewFuncDialOption(func(options *dialOptions) {
-		options.insecure = true
-	})
-}
-
-func WithTransType(kind string) DialOption {
-	return NewFuncDialOption(func(options *dialOptions) {
-		options.transport = kind
-	})
-}
-
-func NewConnection(host string, opts ...DialOption) *ClientConn {
-	client := &ClientConn{
-		host: host,
-	}
-
-	for _, opt := range opts {
-		opt.apply(&client.opts)
-	}
-	return client
-}
 func main() {
-	//opts := []DialOption{
-	//	WithInsecure(),
-	//	WithTransType("tcp"),
-	//}
-	//
-	//dd := NewConnection("192", opts...)
-	//fmt.Println(NewPlayer([]HairOption{WithColor("red"), WithModel(1)}...))
+	a := A{Name: "a"}
+	a.Do()
+	fmt.Println(a.Name)
+	a2 := &A{}
+	a2.Do()
+	fmt.Println(a2.Name)
 
+	b := B{}
+	b.Do()
+	fmt.Println(b.Name)
+	b2 := &B{}
+	b2.Do()
+	fmt.Println(b2.Name)
 }
