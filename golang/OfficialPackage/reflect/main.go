@@ -24,4 +24,5 @@ func main() {
 	}
 	createQuery(o)
 	dd()
+	createQuery(3)
 }
