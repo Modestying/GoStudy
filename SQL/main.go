@@ -9,7 +9,7 @@ func main() {
 	fmt.Println("Testing Golang Redis")
 
 	client := redis.NewClient(&redis.Options{
-		Addr: "192.168.10.200:6379",
+		Addr: "192.168.10.152:6379",
 		Password: "",
 		DB: 0,
 	})
