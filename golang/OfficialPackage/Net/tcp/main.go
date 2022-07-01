@@ -5,39 +5,42 @@ import (
 	"net"
 )
 
-func process(conn net.Conn) {
-	defer conn.Close()
+func tcpServer(lis net.Listener) {
 	for {
-		var buf [128]byte
-		n, err := conn.Read(buf[:])
+		conn, err := lis.Accept()
 		if err != nil {
-			fmt.Println("Read from tcp server failed,err:", err)
-			break
+			return
 		}
-		data := string(buf[:n])
-		fmt.Printf("Recived from client,data:%s\n", data)
+		fmt.Println("get tcp")
+		conn.Close()
 	}
 }
 
 // ./main.exe 1 2 "third" --port=15
 func main() {
-
+	fmt.Println(getIntranetIP())
 	// 监听TCP 服务端口
 	listener, err := net.Listen("tcp", "0.0.0.0:8503")
 	if err != nil {
 		fmt.Println("Listen tcp server failed,err:", err)
 		return
 	}
+	defer listener.Close()
+	tcpServer(listener)
+}
 
-	for {
-		// 建立socket连接
-		conn, err := listener.Accept()
-		if err != nil {
-			fmt.Println("Listen.Accept failed,err:", err)
-			continue
-		}
-
-		// 业务处理逻辑
-		go process(conn)
+func getIntranetIP() string {
+	addrs, err := net.InterfaceAddrs()
+	if err != nil {
+		return "127.0.0.1"
 	}
+
+	for _, address := range addrs {
+		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if ipnet.IP.To4() != nil {
+				return ipnet.IP.String()
+			}
+		}
+	}
+	return "127.0.0.1"
 }
