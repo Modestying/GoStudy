@@ -14,7 +14,7 @@ type D struct {
 	name string
 }
 
-func (S *Servo) PanLeft() {
+func (S *Servo) panLeft() {
 	fmt.Println("PAN_LEFT")
 }
 

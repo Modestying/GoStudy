@@ -2,27 +2,28 @@ package main
 
 import (
 	"fmt"
+	"github.com/spance/go-callprivate/private"
+	"net/http"
 	"reflect"
+	"runtime"
 )
 
-type order struct {
-	ordId      int
-	customerId int
+type obj int
+
+func (o *obj) Private() {
+	fmt.Println("private func LOL.", runtime.GOOS, runtime.GOARCH)
 }
 
-func createQuery(q interface{}) {
-	t := reflect.TypeOf(q)
-	v := reflect.ValueOf(q)
-	fmt.Println("Type ", t)
-	fmt.Println("Value ", v)
-
-}
 func main() {
-	o := order{
-		ordId:      456,
-		customerId: 56,
-	}
-	createQuery(o)
-	dd()
-	createQuery(3)
+	// example 1: Call *obj.private()
+	var o obj
+	method := reflect.ValueOf(&o).MethodByName("private")
+	private.SetAccessible(method)
+	method.Call(nil) // stdout ...
+
+	// example 2: Call http.Header.clone()
+	var h = http.Header{"k": {"v"}}
+	clone := reflect.ValueOf(h).MethodByName("clone")
+	private.SetAccessible(clone)
+	fmt.Println(clone.Call(nil)[0]) // stdout map[k:[v]]
 }

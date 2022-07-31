@@ -6,15 +6,16 @@ import (
 )
 
 func dd() {
-	servo := &Servo{data: 1}
-	value := reflect.ValueOf(servo)
+	//servo := &Servo{data: 1}
+	var servo Servo
+	value := reflect.ValueOf(&servo)
 	fun := value.MethodByName("PanLeft")
 	if !fun.IsValid() {
 		fmt.Println("invalid")
 	} else {
 		fun.Call([]reflect.Value{})
 	}
-
+	return
 	//arg := make([]reflect.Value, 2)
 	//arg[0] = reflect.ValueOf(1)
 	//arg[1] = reflect.ValueOf("dd")
@@ -25,8 +26,8 @@ func dd() {
 		num:  12,
 	})})
 
-	f:=reflect.ValueOf(servo).MethodByName("WithVal")
+	f := reflect.ValueOf(servo).MethodByName("WithVal")
 	fmt.Println(f.Type().NumIn()) //获取函数参数个数
 	fmt.Println(reflect.ValueOf(f))
+	f.Call([]reflect.Value{reflect.ValueOf(1), reflect.ValueOf("ss")})
 }
-
