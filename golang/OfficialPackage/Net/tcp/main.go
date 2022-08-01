@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"net"
 )
@@ -11,7 +12,9 @@ func tcpServer(lis net.Listener) {
 		if err != nil {
 			return
 		}
-		fmt.Println("get tcp")
+		reader := bufio.NewReader(conn)
+		readString, _ := reader.ReadString('\n')
+		fmt.Printf("%s", readString)
 		conn.Close()
 	}
 }
