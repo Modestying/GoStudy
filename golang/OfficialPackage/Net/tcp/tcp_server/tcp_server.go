@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
+	"log"
 	"net"
 )
 
@@ -13,8 +15,11 @@ func tcpServer(lis net.Listener) {
 			return
 		}
 		reader := bufio.NewReader(conn)
-		readString, _ := reader.ReadString('\n')
-		fmt.Printf("%s", readString)
+		buf := make([]byte, 2048)
+		if _, err := io.ReadAtLeast(reader, buf, 4); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s\n", buf)
 		conn.Close()
 	}
 }
@@ -23,7 +28,7 @@ func tcpServer(lis net.Listener) {
 func main() {
 	fmt.Println(getIntranetIP())
 	// 监听TCP 服务端口
-	listener, err := net.Listen("tcp", "0.0.0.0:8503")
+	listener, err := net.Listen("tcp", "127.0.0.1:8503")
 	if err != nil {
 		fmt.Println("Listen tcp server failed,err:", err)
 		return
