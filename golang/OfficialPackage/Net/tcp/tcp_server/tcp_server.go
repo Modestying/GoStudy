@@ -3,52 +3,45 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
-	"log"
 	"net"
 )
 
-func tcpServer(lis net.Listener) {
+func process(conn net.Conn) {
+	defer conn.Close() //关闭连接
+	fmt.Println("connection success!")
 	for {
-		conn, err := lis.Accept()
-		if err != nil {
-			return
-		}
 		reader := bufio.NewReader(conn)
-		buf := make([]byte, 2048)
-		if _, err := io.ReadAtLeast(reader, buf, 4); err != nil {
-			log.Fatal(err)
+		var buf [128]byte
+		n, err := reader.Read(buf[:]) //读取数据
+		if err != nil {
+			fmt.Println("read from client failed,error:", err)
+			break
+		} else {
+			fmt.Println("success read!")
 		}
-		fmt.Printf("%s\n", buf)
-		conn.Close()
+		recvStr := string(buf[:n])
+		fmt.Println("收到client端发送的数据：", recvStr)
+		conn.Write([]byte("server" + recvStr)) //发送数据
 	}
 }
 
-// ./main.exe 1 2 "third" --port=15
 func main() {
-	fmt.Println(getIntranetIP())
-	// 监听TCP 服务端口
-	listener, err := net.Listen("tcp", "127.0.0.1:8503")
+	listen, err := net.Listen("tcp", "0.0.0.0:8503")
 	if err != nil {
-		fmt.Println("Listen tcp server failed,err:", err)
+		fmt.Println("Listen failed,error:", err)
 		return
+	} else {
+		fmt.Println("success listen!")
 	}
-	defer listener.Close()
-	tcpServer(listener)
-}
-
-func getIntranetIP() string {
-	addrs, err := net.InterfaceAddrs()
-	if err != nil {
-		return "127.0.0.1"
-	}
-
-	for _, address := range addrs {
-		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-			if ipnet.IP.To4() != nil {
-				return ipnet.IP.String()
-			}
+	fmt.Println("waiting for client")
+	for {
+		conn, err := listen.Accept() //建立连接
+		if err != nil {
+			fmt.Println("accept failed,error:", err)
+			continue
+		} else {
+			fmt.Println("success accept!")
 		}
+		go process(conn) //启动一个goroutine处理连接
 	}
-	return "127.0.0.1"
 }
