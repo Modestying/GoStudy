@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	conn, err := net.Dial("tcp", "127.0.0.1:8503")
+	conn, err := net.Dial("tcp", "192.168.10.96:8503")
 	if err != nil {
 		panic(err)
 	}
@@ -15,7 +15,7 @@ func main() {
 	var answer [1024]byte
 	n, err := conn.Read(answer[:])
 	if err != nil {
-		fmt.Println("recv failed,err:", err)
+		fmt.Println("rec failed,err:", err)
 		return
 	}
 	fmt.Println(string(answer[:n]))
