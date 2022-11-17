@@ -5,15 +5,13 @@ type Demo struct {
 }
 
 // struct 方法带*与不带*
-//1. 带*,func中对内部成员变量的修改会保存
+//1. 带*func中对内部成员变量的修改会保存
 //2. instance和*instance都可以访问到GetNameOrigin和GetName方法
 
-func (d *Demo) GetName() string {
+func (d *Demo) GetName() {
 	d.Name = "GetName"
-	return d.Name
 }
 
-func (d Demo) GetNameOrigin() string {
+func (d Demo) GetNameOrigin() {
 	d.Name = "GetNameOrigin"
-	return "Demo"
 }

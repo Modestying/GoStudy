@@ -1,4 +1,4 @@
-package main
+package signal
 
 import (
 	"fmt"
@@ -27,15 +27,4 @@ func ElegantClose(wait *sync.WaitGroup) {
 	}
 
 	wait.Done()
-}
-
-// 监听全部信号
-func main() {
-	//合建chan
-	//监听所有信号
-	var wait sync.WaitGroup
-	wait.Add(1)
-	go ElegantClose(&wait)
-	wait.Wait()
-	fmt.Println("Service Exit")
 }

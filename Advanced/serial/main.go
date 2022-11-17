@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/tarm/serial"
 	"io"
+
+	"github.com/tarm/serial"
 )
 
+// TODO 更新串口使用
 var port string
 var baudRate int
 
