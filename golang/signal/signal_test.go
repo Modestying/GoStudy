@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 	"testing"
-	"github.com/Modestying/GoStudy/golang/OfficalPackage/signal"
+	"github.com/Modestying/GoStudy/golang/signal"
 
 )
 

@@ -8,17 +8,15 @@ import (
 )
 
 func ElegantClose(wait *sync.WaitGroup) {
-	c := make(chan os.Signal)
+	c := make(chan os.Signal, 1)
 	signal.Notify(c)
 	for data := range c {
 		fmt.Println("Receive Signal :", data.String())
 		switch data.String() {
 		case "interrupt":
 			close(c)
-			break
 		default:
 			fmt.Println("default")
-			break
 		}
 	}
 

@@ -73,7 +73,7 @@ func TestExclusiveCallDoDiffDupSuppress(t *testing.T) {
 	g := NewSingleFlight()
 	broadcast := make(chan struct{})
 	var calls int32
-	tests := []string{"e", "a", "e", "a", "b", "c", "b", "a", "c", "d", "b", "c", "d","s"}
+	tests := []string{"e", "a", "e", "a", "b", "c", "b", "a", "c", "d", "b", "c", "d", "s"}
 
 	var wg sync.WaitGroup
 	for _, key := range tests {

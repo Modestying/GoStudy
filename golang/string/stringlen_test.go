@@ -1,11 +1,10 @@
-package ChineseChar
+package string
 
 import (
 	"fmt"
 	"strconv"
 	"testing"
 )
-
 
 func TestOther(t *testing.T) {
 	text := "a4浮"

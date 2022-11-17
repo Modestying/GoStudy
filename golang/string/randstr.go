@@ -1,27 +1,17 @@
-package main
+package string
 
 import (
 	"encoding/hex"
-	"fmt"
 	"math/rand"
 	"time"
 )
 
-func main() {
-	for i := 0; i < 10; i++ {
-		fmt.Println(RandStr2(5))
-		fmt.Println("---------------------------------")
-	}
-
-}
-
-//RandStr
+// RandStr
 func RandStr(length int) string {
 	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	bytes := []byte(str)
 	var result []byte
 	rand.Seed(time.Now().UnixNano())
-	//fmt.Println(time.Now().UnixNano())
 	for i := 0; i < length; i++ {
 		result = append(result, bytes[rand.Int31()%62])
 	}
