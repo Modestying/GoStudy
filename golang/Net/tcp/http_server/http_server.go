@@ -1,13 +1,13 @@
-package main
+package http_server
 
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
+	"strconv"
 )
 
-func main() {
+func HttpServerListen(port int) {
 	helloHandler := func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println("dd")
 		io.WriteString(w, "Hello, world!\n")
@@ -15,7 +15,7 @@ func main() {
 
 	http.HandleFunc("/d", indexHandler)
 	http.HandleFunc("/hello", helloHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	http.ListenAndServe(":"+strconv.Itoa(port), nil)
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {

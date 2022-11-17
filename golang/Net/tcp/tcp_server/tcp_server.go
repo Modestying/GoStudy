@@ -1,4 +1,4 @@
-package main
+package tcp_server
 
 import (
 	"bufio"
@@ -25,8 +25,9 @@ func process(conn net.Conn) {
 	}
 }
 
-func main() {
-	listen, err := net.Listen("tcp", "0.0.0.0:8503")
+// StartTcpServer 启动httpServer
+func StartTcpServer(address string) {
+	listen, err := net.Listen("tcp", address)
 	if err != nil {
 		fmt.Println("Listen failed,error:", err)
 		return

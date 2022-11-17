@@ -1,12 +1,12 @@
-package main
+package tcp_client
 
 import (
 	"fmt"
 	"net"
 )
 
-func main() {
-	conn, err := net.Dial("tcp", "192.168.10.96:8503")
+func TcpConnect(address string) {
+	conn, err := net.Dial("tcp", address)
 	if err != nil {
 		panic(err)
 	}
