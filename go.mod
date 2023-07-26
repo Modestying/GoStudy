@@ -1,7 +1,9 @@
 module github.com/Modestying/GoStudy
 
 go 1.20
+
 replace github.com/Modestying/GoStudy v0.0.2 => ../GoStudy
+
 require (
 	github.com/go-ping/ping v1.1.0
 	github.com/rabbitmq/amqp091-go v1.8.1
