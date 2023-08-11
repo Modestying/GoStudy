@@ -1,23 +1,28 @@
 package main
 
 import (
+	"fmt"
+	"runtime"
 	"time"
 )
 
 func main() {
-	t := time.NewTicker(time.Second * 1)
-	go func(t *time.Ticker) {
-		time.Sleep(time.Second * 5)
-		t.Stop()
-	}(t)
-	// for _ = range t.C {
-	// 	fmt.Println("tick")
-	// }
-	for {
-		if _, ok := <-t.C; !ok {
-			break
-		} else {
-			println("tick")
+	ticker := time.NewTicker(time.Second)
+	done := make(chan struct{}, 1)
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				fmt.Println("xx")
+			case <-done:
+				fmt.Println("done")
+				return
+			default:
+			}
 		}
-	}
+	}()
+	time.Sleep(time.Second * 7)
+	done <- struct{}{}
+	fmt.Println("end")
+	fmt.Println(runtime.NumGoroutine())
 }

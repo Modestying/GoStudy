@@ -2,6 +2,11 @@ package main
 
 import "fmt"
 
+
+/*
+负载因子：kv数量/桶数量 6.5
+
+*/
 type Student struct {
 	Age int
 }
