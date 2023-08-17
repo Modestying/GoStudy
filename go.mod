@@ -6,8 +6,10 @@ replace github.com/Modestying/GoStudy v0.0.2 => ../GoStudy
 
 require (
 	github.com/gin-gonic/gin v1.9.1
+	github.com/go-mysql-org/go-mysql v1.7.0
 	github.com/go-ping/ping v1.1.0
 	github.com/rabbitmq/amqp091-go v1.8.1
+	github.com/siddontang/go-log v0.0.0-20190221022429-1e957dd83bed
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
 	google.golang.org/grpc v1.56.2
 	google.golang.org/protobuf v1.31.0
@@ -16,6 +18,7 @@ require (
 )
 
 require (
+	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/bytedance/sonic v1.9.1 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
@@ -36,8 +39,16 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.8 // indirect
+	github.com/pingcap/errors v0.11.5-0.20210425183316-da1aaba5fb63 // indirect
+	github.com/pingcap/log v0.0.0-20210625125904-98ed8e2eb1c7 // indirect
+	github.com/pingcap/tidb/parser v0.0.0-20221126021158-6b02a5d8ba7d // indirect
+	github.com/shopspring/decimal v0.0.0-20180709203117-cd690d0c9e24 // indirect
+	github.com/siddontang/go v0.0.0-20180604090527-bdc77568d726 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/multierr v1.6.0 // indirect
+	go.uber.org/zap v1.18.1 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
@@ -45,5 +56,6 @@ require (
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
