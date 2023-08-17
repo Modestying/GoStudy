@@ -1,9 +1,13 @@
 package main
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
 func main() {
 	ctx := context.Background()
-	context.WithCancel(ctx,)
+	ctxVal := context.WithValue(ctx, "s", "xx")
+	fmt.Println(ctxVal.Value("s"))
 
 }

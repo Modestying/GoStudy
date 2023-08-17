@@ -3,28 +3,46 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"strconv"
 	"sync"
 	"time"
 )
 
+type Task struct {
+	Des  string
+	Work func()
+}
 type GPool struct {
-	controler chan struct{}
+	sync.WaitGroup
+	taskQueue chan Task
 }
 
 func NewGPool(num int) *GPool {
 	pool := &GPool{
-		controler: make(chan struct{}, num),
+		taskQueue: make(chan Task),
 	}
+	pool.Add(num)
 	for i := 0; i < num; i++ {
-		pool.controler <- struct{}{}
+		go pool.Work(i)
 	}
 	return pool
 }
 
-func (pool *GPool) Do(f func(any), data any) {
-	<-pool.controler
-	f(data)
-	pool.controler <- struct{}{}
+func (pool *GPool) Work(no int) {
+	for task := range pool.taskQueue {
+		fmt.Println("work id:", no)
+		task.Work()
+	}
+	pool.Done()
+}
+
+func (pool *GPool) Stop() {
+	close(pool.taskQueue)
+	pool.Wait()
+}
+
+func (pool *GPool) AddTask(task Task) {
+	pool.taskQueue <- task
 }
 func main1() {
 	ch := make(chan struct{}, 5)
@@ -53,12 +71,15 @@ func main1() {
 
 func main() {
 	pool := NewGPool(5)
+	time.Sleep(time.Second * 1)
 	for i := 0; i < 11; i++ {
 		i := i
-		go pool.Do(func(data any) {
-			time.Sleep(time.Second)
-			fmt.Println("job index:", data)
-		}, i)
+		pool.AddTask(Task{
+			Des: strconv.Itoa(i),
+			Work: func() {
+				fmt.Println(i)
+			},
+		})
 	}
-	select {}
+	time.Sleep(time.Second * 4)
 }
