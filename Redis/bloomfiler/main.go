@@ -1,10 +1,28 @@
 package main
 
 import (
+	"fmt"
 	"math"
 
 	"github.com/spaolacci/murmur3"
 )
+
+func main() {
+	A := 1
+	A = 1 << 1
+	fmt.Println(A)
+	A = 1
+	A = A | (1 << 3)
+	// old: 0001
+	// new: 1000
+	fmt.Println(A)
+	return
+	fmt.Println("bloom filter...")
+	encry := NewEncryptor()
+	fmt.Println(encry.Encrypt("xx"))
+	fmt.Println(encry.Encrypt("xx"))
+
+}
 
 type Encryptor struct {
 }
@@ -63,8 +81,8 @@ func (l *LocalBloomService) Exist(val string) bool {
 func (l *LocalBloomService) Set(val string) {
 	l.n++
 	for _, offset := range l.getEncrypted(val) {
-		index := offset >> 5
-		bitOffset := offset & 31
-		l.bitmap[index] |= (1 << bitOffset)
+		index := offset >> 5     // 索引
+		bitOffset := offset & 31 // 获取余数，计算偏差量
+		l.bitmap[index] = l.bitmap[index] | (1 << bitOffset)
 	}
 }
