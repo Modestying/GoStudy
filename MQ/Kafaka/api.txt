@@ -1,0 +1,34 @@
+/opt/kafka/bin/kafka-topics.sh  --create --topic demo \
+--bootstrap-server 192.168.10.190:9095 \
+--partitions 1 --replication-factor 1
+
+
+/opt/kafka/bin/kafka-topics.sh  --create --topic demo \
+--zookeeper zookeeper:2181 \
+--partitions 1 --replication-factor 1
+
+
+/opt/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper:2181
+/opt/kafka/bin/kafka-topics.sh --list --bootstrap-server 192.168.10.190:9095
+
+/opt/kafka/bin/kafka-topics.sh  --delete --topic demo \
+--bootstrap-server 192.168.10.190:9095         
+
+/opt/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server 192.168.10.190:9095  \
+--topic demo \
+--from-beginning
+
+
+## consume msgs
+docker exec -it 7d9 //opt/kafka/bin/kafka-console-consumer.sh \
+--bootstrap-server 192.168.10.190:9095  \
+--topic demo \
+--from-beginning
+
+
+## produce msgs
+
+docker exec -it 1a3 /opt/kafka/bin/kafka-console-producer.sh \
+--bootstrap-server kafka-2:9095  \
+--topic demo \

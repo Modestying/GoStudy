@@ -33,10 +33,13 @@ func main() {
 		Password: "", // 没有密码，默认值
 		DB:       0,  // 默认DB 0
 	})
-	SetKey(rdb, "StringDemo", "1", 0)
+	SetKey(rdb, "StringDemo", "99", time.Second*3)
 	GetKey(rdb, "StringDemo")
 	IncKey(rdb, "StringDemo")
 	GetKey(rdb, "StringDemo")
 	DecKey(rdb, "StringDemo")
 	TtlKey(rdb, "StringDemo")
+	time.Sleep(time.Second * 3)
+	
+	fmt.Println(rdb.SetNX(context.Background(), "StringDemo", "81", 0).Result())
 }

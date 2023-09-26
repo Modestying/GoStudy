@@ -8,6 +8,9 @@ import (
 )
 
 func main() {
+	fmt.Println(34 >> 5)
+	fmt.Println(34 & 31)
+
 	A := 1
 	A = 1 << 1
 	fmt.Println(A)

@@ -1,4 +1,4 @@
-package tcp_server
+package main
 
 import (
 	"bufio"
@@ -45,4 +45,8 @@ func StartTcpServer(address string) {
 		}
 		go process(conn) //启动一个goroutine处理连接
 	}
+}
+
+func main() {
+	StartTcpServer(":77")
 }

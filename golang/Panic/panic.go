@@ -1,4 +1,4 @@
-package panic
+package main
 
 import (
 	"errors"
@@ -21,6 +21,36 @@ func PanicWithRecover() {
 
 // PanicWithoutRecover 函数无recover，会跳到上层函数寻找recover
 func PanicWithoutRecover() {
+
+	fmt.Println("PanicWithoutPanic....  ")
 	err := errors.New("PanicWithoutPanic")
 	panic(err)
+}
+
+func proc() {
+	panic("panic proc")
+}
+func PanicContinue() {
+	for i := 0; i < 10; i++ {
+		func() {
+			defer func() {
+				if r := recover(); r != nil {
+					fmt.Println("Panic Msg:", r)
+				}
+			}()
+			proc()
+		}()
+	}
+}
+
+// go run panic.go > output.txt 2>&1
+func main() {
+	// defer func() {
+	// 	if r := recover(); r != nil {
+	// 		fmt.Println("Panic Msg:", r.(error).Error())
+	// 	}
+	// }()
+	fmt.Println("xx")
+	//PanicContinue()
+	PanicWithoutRecover()
 }

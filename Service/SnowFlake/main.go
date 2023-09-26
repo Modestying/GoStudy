@@ -98,3 +98,8 @@ func GetGenTimestamp(id int64) int64 {
 func GetGetnTime(id int64) string {
 	return time.Unix(GetGenTimestamp(id)/1000, 0).Format("2023-08-017 21:53:22")
 }
+
+func s() {
+	var x sync.WaitGroup
+	x.Add(1)
+}

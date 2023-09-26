@@ -10,3 +10,6 @@ func TestBinary() {
 	binary.BigEndian.PutUint16(data[0:2], uint16(1))
 	fmt.Printf("%x\n", data)
 }
+
+func main() {
+}
