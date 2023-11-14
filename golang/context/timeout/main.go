@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-const shortDuration = 1 * time.Millisecond
+const shortDuration = 10 * time.Second
 
 func main() {
 	d := time.Now().Add(shortDuration)

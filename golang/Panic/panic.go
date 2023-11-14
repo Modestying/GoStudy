@@ -51,6 +51,6 @@ func main() {
 	// 	}
 	// }()
 	fmt.Println("xx")
-	//PanicContinue()
-	PanicWithoutRecover()
+	PanicContinue()
+	//PanicWithoutRecover()
 }
