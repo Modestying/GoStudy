@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: my-internal-service
+selector: 
+  app: my-app
+spec:
+  name: 12
+  type: ClusterIP
+  ports:  
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP

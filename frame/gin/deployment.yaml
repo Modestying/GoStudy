@@ -1,0 +1,22 @@
+apiVersion: apps/v1 #配置格式版本
+kind: Deployment    #创建资源类型
+metadata:   #
+  name: myapp # 必备
+  labels:
+    name: myapp
+spec: # 规格说明
+  replicas: 1 #副本数量
+  selector:
+    matchLabels:
+      name: myapp
+  template: # pod模版
+    metadata:
+      labels:
+        name: myapp
+    spec: # podg规格，定义pod中每个容器的属性，
+      containers:
+        - name: myapp # 必备
+          image: gin_demo:v1 #必备
+          imagePullPolicy: IfNotPresent #镜像拉取源头
+          ports:  # 端口号
+            - containerPort: 8085
