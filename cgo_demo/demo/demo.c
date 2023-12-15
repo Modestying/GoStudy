@@ -50,6 +50,7 @@ void processStructPtr(Student *stu,int length) {
     printf("processStructPtr:\n");
     for (int i = 0; i < length; i++) {
         stu[i].Age = i+10;
+        // name定义是char[20]，长度超出会数据异常，中文最多7位
         strcpy(stu[i].Name,"你好啊");
     }
     // for (int i=0;i<length;i++){
