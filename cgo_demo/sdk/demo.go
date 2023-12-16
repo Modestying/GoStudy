@@ -121,13 +121,13 @@ func ProcessVoidPtrPtr() {
 	C.processVoidPtrPtr(&ptr)
 	// 通过指针获取具体的值
 	value := *(*int)(ptr)
-	fmt.Println(value) // Output: 42
+	fmt.Println("first get", value) // Output: 42
 	// 通过指针修改具体的值
 	*(*int)(ptr) = 89
 	C.processVoidPtrPtr(&ptr)
 	// 重新获取具体的值
 	value = *(*int)(ptr)
-	fmt.Println(value) // Output: 42
+	fmt.Println("second get", value) // Output: 42
 
 	// 释放内存，ptr指向的内存空间是在c里面申请的，需要c的free函数释放
 	// 可以不调用，程序结束后会自动释放，但不建议这样做，典型的内存泄露问题
