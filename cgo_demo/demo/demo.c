@@ -50,10 +50,30 @@ void processStructPtr(Student *stu,int length) {
     printf("processStructPtr:\n");
     for (int i = 0; i < length; i++) {
         stu[i].Age = i+10;
-        // name定义是char[20]，长度超出会数据异常，中文最多7位
         strcpy(stu[i].Name,"你好啊");
     }
     // for (int i=0;i<length;i++){
     //     printf("name:%s\n",stu[i].Name);
     // }
 }
+
+void processVoidPtr(void * data){
+    int *intPtr=(int*)data;
+    printf("processVoidPtr:%d\n",*intPtr);
+    *intPtr=100;
+}
+
+void processVoidPtrPtr(void **ptr){
+    printf("processVoidPtrPtr\n");
+    if (*ptr!=NULL){
+        printf("ptr val:%d\n",*(int*)(*ptr));
+        // 重新赋值，这里主动释放内存
+        free(*ptr);
+        *ptr=NULL;
+    }
+    // value 不能释放
+    int *value = (int *)malloc(sizeof(int));
+    *value = 42;
+    *ptr = value;
+}
+

@@ -28,4 +28,7 @@ void processConstUnsignedCharPtr(const unsigned char *data);
 void processStruct( Student stu);
 void processStructPtr( Student *stu,int length);
 
+void processVoidPtr(void *);
+void processVoidPtrPtr(void **);
+
 #endif

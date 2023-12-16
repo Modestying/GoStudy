@@ -57,7 +57,15 @@ void TestStruct(){
         processStruct(stu[i]);
     }
 }
+
+void TestVoidPtr(){
+    int a = 10;
+    void *p = &a;
+    processVoidPtr(p);
+
+    processVoidPtrPtr(&p);
+}
 int main(){
-    TestStruct();
+    TestVoidPtr();
     return 0;
 }
