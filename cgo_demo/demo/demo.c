@@ -43,14 +43,21 @@ void processConstUnsignedCharPtr(const unsigned char *data){
 }
 
 void processStruct( Student stu) {
-    printf("processStruct: %d, %s\n", stu.Age, stu.Name);
+   printf("processStruct: %d, %s %d\n", stu.Age, stu.Name,*((int *)stu.No));
 }
 
-void processStructPtr(Student *stu,int length) {
+void processStructPtr(Student *stu,int* length) {
     printf("processStructPtr:\n");
-    for (int i = 0; i < length; i++) {
+    int num=*length;
+    *length=num-1;
+    for (int i = 0; i <num-1; i++) {
         stu[i].Age = i+10;
         strcpy(stu[i].Name,"你好啊");
+        
+       void *noval=malloc(sizeof(int));
+        *(int *)noval = i + 100;
+        stu[i].No=noval;
+
     }
     // for (int i=0;i<length;i++){
     //     printf("name:%s\n",stu[i].Name);

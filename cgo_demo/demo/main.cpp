@@ -45,16 +45,25 @@ void testData(){
 }
 
 Student stu[10];
+
+void printStudent(Student stu){
+    printf("name:%s, age:%d no:%d \n", stu.Name, stu.Age,*((int *)stu.No));
+}
 void TestStruct(){
     Student s;
     s.Age = 10;
     strcpy(s.Name, "hello");
+    void *no=malloc(sizeof(int));
+    *((int *)no)=1;
+    s.No=no;
     processStruct(s);
 
-    processStructPtr(stu,6);
-    for (int i = 0; i < 6; i++)
+    int number=5;
+    processStructPtr(stu,&number);
+    printf("real number:%d\n",number);
+    for (int i = 0; i < number; i++)
     {   
-        processStruct(stu[i]);
+        printStudent(stu[i]);
     }
 }
 
@@ -62,10 +71,9 @@ void TestVoidPtr(){
     int a = 10;
     void *p = &a;
     processVoidPtr(p);
-
     processVoidPtrPtr(&p);
 }
 int main(){
-    TestVoidPtr();
+    TestStruct();
     return 0;
 }

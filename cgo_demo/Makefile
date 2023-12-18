@@ -3,6 +3,11 @@
 clean:
 	rm -rf build
 
+.PHONY: cpp
+# make cpp demo
+cpp:
+	cd demo && g++ main.cpp demo.h demo.c -o main &&./main
+
 .PHONY: lib
 # make demo lib
 lib:

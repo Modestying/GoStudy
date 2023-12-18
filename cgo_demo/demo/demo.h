@@ -5,6 +5,7 @@ typedef struct __Student
 {
     int Age;
     char Name[20];
+    void * No;
 }Student;
 
 
@@ -26,7 +27,7 @@ void processConstUnsignedCharPtr(const unsigned char *data);
 
 
 void processStruct( Student stu);
-void processStructPtr( Student *stu,int length);
+void processStructPtr( Student *stu,int *length);
 
 void processVoidPtr(void *);
 void processVoidPtrPtr(void **);

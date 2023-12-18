@@ -2,6 +2,7 @@ package main
 
 import (
 	"cgo_example/sdk"
+	"fmt"
 )
 
 func main() {
@@ -25,12 +26,12 @@ func main() {
 	// copy(stu.Name[:], []byte("0123456789abcdefghijk"))
 	// sdk.ProcessStruct(stu)
 
-	// students := make([]sdk.Student, 4)
-	// sdk.ProcessStructPtr(students, 4)
-	// for _, v := range students {
-	// 	fmt.Println(v.String())
-	// }
+	students := make([]sdk.Student, 4)
 
+	students = sdk.ProcessStructPtr(students, 4)
+	for _, v := range students {
+		fmt.Println(v.String())
+	}
 	//sdk.ProcessVoidPtr()
-	sdk.ProcessVoidPtrPtr()
+	//sdk.ProcessVoidPtrPtr()
 }

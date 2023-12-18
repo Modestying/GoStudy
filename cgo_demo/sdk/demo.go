@@ -73,10 +73,11 @@ func ProcessConstUnsignedCharPr(data string) {
 type Student struct {
 	Age  int
 	Name [20]byte // [20]byte
+	No   unsafe.Pointer
 }
 
-func (s Student) String() string {
-	return fmt.Sprintf("Student: Age = %d, Name = %s-end", s.Age, string(s.Name[:]))
+func (s *Student) String() string {
+	return fmt.Sprintf("Student: Age = %d, Name = %s-end No = %d", s.Age, string(s.Name[:]), *(*int)(s.No))
 }
 
 // ProcessStruct --> Student
@@ -91,20 +92,18 @@ func ProcessStruct(stu Student) {
 
 // processStructPtr --> Student * 这是一个对数组的修改
 // 没有发生扩容，切片内存地址不会修改
-func ProcessStructPtr(stu []Student, number int) {
+func ProcessStructPtr(stu []Student, number int) []Student {
 	students := make([]C.Student, number)
-	C.processStructPtr(&students[0], C.int(number))
-	/*
-		for i := 0; i < number; i++ {
-			age := int(students[i].Age)
-			fmt.Printf("Student %d: Age = %d, Name = %s-end\n", i, age, C.GoString(&students[i].Name[0]))
-		}
-	*/
+	C.processStructPtr(&students[0], (*C.int)(unsafe.Pointer(&number)))
+	fmt.Println("return length", number)
 	for i := 0; i < number; i++ {
 		stu[i].Age = int(students[i].Age)
 		copy(stu[i].Name[:], []byte(C.GoString(&students[i].Name[0])))
+		fmt.Println(*(*C.int)(students[i].No))
+		stu[i].No = unsafe.Pointer(students[i].No)
 		//fmt.Println(stu[i].String())
 	}
+	return stu[:number]
 }
 
 // ProcessVoidPtr --> void *
