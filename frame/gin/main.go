@@ -28,7 +28,7 @@ func HandleIndex(ctx *gin.Context) {
 	case <-funcCtx.Done():
 		ctx.String(http.StatusGatewayTimeout, "timeout")
 	}
-
+	
 	ctx.String(http.StatusOK, fmt.Sprintf("%d", a))
 
 }

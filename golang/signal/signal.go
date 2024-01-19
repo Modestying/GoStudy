@@ -1,4 +1,4 @@
-package signal
+package main
 
 import (
 	"fmt"
@@ -7,22 +7,26 @@ import (
 	"sync"
 )
 
-func ElegantClose(wait *sync.WaitGroup) {
+func main() {
+	wait := &sync.WaitGroup{}
+	wait.Add(1)
 	c := make(chan os.Signal, 1)
+	defer func() {
+		fmt.Println("defer close")
+	}()
 	signal.Notify(c)
-	for data := range c {
-		fmt.Println("Receive Signal :", data.String())
-		switch data.String() {
-		case "interrupt":
-			close(c)
-		default:
-			fmt.Println("default")
+	go func() {
+		for data := range c {
+			fmt.Println("Receive Signal :", data.String())
+			switch data.String() {
+			case "interrupt":
+				close(c)
+				wait.Done()
+			default:
+				fmt.Println("default")
+			}
 		}
-	}
-
-	if _, ok := <-c; !ok {
-		fmt.Println("Success Close Signal Channel")
-	}
-
-	wait.Done()
+	}()
+	fmt.Println("Start listen interrupt")
+	wait.Wait()
 }

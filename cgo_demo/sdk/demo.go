@@ -56,6 +56,7 @@ func ProcessUnsignedChar(data byte) {
 	C.processUnsignedChar(C.uchar(data))
 }
 
+
 // ProcessUnsignedCharPtr --> unsigned char *
 func ProcessUnsignedCharPtr(data string) {
 	str := C.CString(data)
