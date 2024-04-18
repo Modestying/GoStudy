@@ -11,6 +11,7 @@ import (
 type Config struct {
 	A string `json:"A" yaml:"A"`
 	B string `json:"B" yaml:"B"`
+	C int    `json:"C,string"`
 }
 
 func Json() {
@@ -32,7 +33,26 @@ func Yaml() {
 	fmt.Println(conf)
 }
 
+func JsonNumber() {
+	cfg := map[string]int{
+		"C": 12,
+	}
+	bytes, err := json.Marshal(cfg)
+	if err != nil {
+		panic(err)
+	}
+	var c Config
+	err = json.Unmarshal(bytes, &c)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%+v", c)
+	_, err = json.Marshal(c)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
-	Json()
-	Yaml()
+	JsonNumber()
 }

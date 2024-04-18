@@ -6,11 +6,13 @@ import (
 	"net"
 )
 
+var data []byte = []byte{0x01, 0x02}
+
 func process(conn net.Conn) {
 	defer conn.Close() //关闭连接
 	fmt.Println("connection success!")
+	reader := bufio.NewReader(conn)
 	for {
-		reader := bufio.NewReader(conn)
 		var buf [128]byte
 		n, err := reader.Read(buf[:]) //读取数据
 		if err != nil {
@@ -21,7 +23,7 @@ func process(conn net.Conn) {
 		}
 		recvStr := string(buf[:n])
 		fmt.Println("收到client端发送的数据：", recvStr)
-		conn.Write([]byte("server" + recvStr)) //发送数据
+		conn.Write(data) //发送数据
 	}
 }
 

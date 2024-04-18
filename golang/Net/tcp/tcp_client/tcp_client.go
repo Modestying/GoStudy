@@ -1,6 +1,7 @@
-package tcp_client
+package main
 
 import (
+	"bufio"
 	"fmt"
 	"net"
 )
@@ -10,14 +11,31 @@ func TcpConnect(address string) {
 	if err != nil {
 		panic(err)
 	}
-	conn.Write([]byte("hello"))
-
-	var answer [1024]byte
-	n, err := conn.Read(answer[:])
-	if err != nil {
-		fmt.Println("rec failed,err:", err)
-		return
+	writer := bufio.NewWriter(conn)
+	go func() {
+		for {
+			writer.Write([]byte("nihao"))
+		}
+	}()
+	reader := bufio.NewReader(conn)
+	for {
+		// lenData, err := reader.Peek(2)
+		// if err != nil {
+		// 	fmt.Println("read from server failed,error:", err)
+		// 	continue
+		// }
+		// fmt.Printf("收到server端发送的数据：%x\n", lenData)
+		// data := make([]byte, lenData[1])
+		data := make([]byte, 2)
+		n, err := reader.Read(data)
+		if err != nil {
+			fmt.Println("read from server failed,error:", err)
+			continue
+		}
+		fmt.Printf("收到server端发送的数据：%x\n", string(data[:n]))
 	}
-	fmt.Println(string(answer[:n]))
-	conn.Close()
+}
+
+func main() {
+	TcpConnect(":77")
 }
