@@ -24,4 +24,4 @@
 !./go.mod
 !./go.sum
 golang/Panic/err.txt
-golang/Net/ws/ws_client
+golang/net/ws/ws_client

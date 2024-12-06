@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"sync"
 	"testing"
-	"github.com/Modestying/GoStudy/golang/signal"
-
 )
 
 func TestSignal(t *testing.T) {
@@ -13,5 +11,5 @@ func TestSignal(t *testing.T) {
 	wait.Add(1)
 	go ElegantClose(&wait)
 	wait.Wait()
-	fmt.Println("Service Exit")
+	fmt.Println("service Exit")
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
 	"github.com/gin-contrib/timeout"
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +16,6 @@ func timeoutMiddleware() gin.HandlerFunc {
 		timeout.WithHandler(func(c *gin.Context) {
 			c.Next()
 		}),
-		timeout.WithResponse(testResponse),
 	)
 }
 func HandleIndex(ctx *gin.Context) {
@@ -28,7 +28,7 @@ func HandleIndex(ctx *gin.Context) {
 	case <-funcCtx.Done():
 		ctx.String(http.StatusGatewayTimeout, "timeout")
 	}
-	
+
 	ctx.String(http.StatusOK, fmt.Sprintf("%d", a))
 
 }
@@ -84,6 +84,7 @@ func main() {
 	})
 	// curl -d 'name=ax' -d 'passwd=123' -X POST http://localhost:80/login
 	engine.POST("/login", func(ctx *gin.Context) {
+		fmt.Println(ctx.Request.RemoteAddr)
 		fmt.Println(ctx.PostForm("name"))
 		fmt.Println(ctx.PostForm("passwd"))
 

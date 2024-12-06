@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS movie (
 
 ) engine=innodb default charset=utf8mb4;
 */
+
 type Movie struct {
 	Uid    int    `gorm:"column:uid" db:"uid" json:"uid" form:"uid"`             //id
 	Code   string `gorm:"column:code" db:"code" json:"code" form:"code"`         //编号
@@ -37,6 +38,9 @@ type MyEventHandler struct {
 	canal.DummyEventHandler
 }
 
+func NewMyEventHandler() *MyEventHandler {
+	return &MyEventHandler{}
+}
 func (h *MyEventHandler) OnRow(e *canal.RowsEvent) error {
 
 	log.Infof("table: %s rowevent: %s %v\n", e.Table.Name, e.Action, e.Rows)
@@ -49,25 +53,4 @@ func (h *MyEventHandler) OnRow(e *canal.RowsEvent) error {
 
 func (h *MyEventHandler) String() string {
 	return "MyEventHandler"
-}
-
-func main() {
-	cfg := canal.NewDefaultConfig()
-	cfg.Addr = "localhost:3306"
-	cfg.User = "root"
-	cfg.Password = "fyl183279"
-	// We only care table canal_test in test db
-	cfg.Dump.TableDB = "demo"
-	cfg.Dump.Tables = []string{"movie"}
-
-	c, err := canal.NewCanal(cfg)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Register a handler to handle RowsEvent
-	c.SetEventHandler(&MyEventHandler{})
-
-	// Start canal
-	c.Run()
 }

@@ -23,14 +23,7 @@ golang学习
       - 字符串和字节数组转换
       - 字符串长度
 3. 服务开发相关
-    - ~~多服务管理~~
     - 服务热更新
     - 访问控制，防击穿
 4. MQ消息队列
-    - ~~RabbitMQ~~
-5. SQL数据库
-    - ~~mysql~~
-    - ~~mongodb~~
-    - ~~sqlite~~
-    - ~~redis~~
-    - ~~postgresql~~
+
