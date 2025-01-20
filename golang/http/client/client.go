@@ -1,37 +1,33 @@
 package main
 
 import (
-	"context"
+	"fmt"
+	"io"
 	"net"
 	"net/http"
+	"time"
 )
 
-var Conn net.Conn
+var presence = "http://localhost:9090/get"
 
 func main() {
-	net.ParseIP("")
-	Conn, _ = net.DialTCP("tcp",
-		&net.TCPAddr{
-			IP:   net.IPv4(127, 0, 0, 1),
-			Port: 22222,
-		},
-		&net.TCPAddr{
-			IP:   net.IPv4(127, 0, 0, 1),
-			Port: 8080,
-		},
-	)
 
 	tr := &http.Transport{
-		DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
-			return Conn, nil
-		},
+		DialContext: (&net.Dialer{
+			Timeout:   5 * time.Second,
+			KeepAlive: 30 * time.Second,
+		}).DialContext,
+		DisableKeepAlives: false,            // 启用 Keep-Alive
+		MaxIdleConns:      100,              // 最大空闲连接数
+		IdleConnTimeout:   90 * time.Second, // 空闲连接超时时间
 	}
 
 	for i := 0; i < 100; i++ {
 		cli := http.Client{
 			Transport: tr,
+			Timeout:   time.Second,
 		}
-		req, err := http.NewRequest(http.MethodGet, "http://localhost:8080/get", nil)
+		req, err := http.NewRequest(http.MethodPost, presence, nil)
 		if err != nil {
 			panic(err)
 		}
@@ -39,8 +35,13 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		defer resp.Body.Close()
+		data, err := io.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		fmt.Println(string(data))
+		_ = resp.Body.Close()
 	}
-	Conn.Close()
 
 }

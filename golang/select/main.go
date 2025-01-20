@@ -1,29 +1,35 @@
 package main
 
 import (
-	"fmt"
+	"flag"
+	"runtime"
 	"time"
 )
 
-func main() {
-	ch1 := make(chan struct{})
-	ch2 := make(chan struct{})
+var num int
+var second int
+var sleep int
 
-	go func() {
-		time.Sleep(time.Second * 1)
-		close(ch1)
-	}()
-	select {
-	case _, ok := <-ch1:
-		if ok {
-			fmt.Println("ss")
-		} else {
-			fmt.Println("SSSS")
-		}
-	case <-ch2:
-		fmt.Println("xx")
-	case <-time.After(time.Second * 6):
-		fmt.Println("timeout")
-		return
+func main() {
+	flag.IntVar(&num, "num", 3, "cpu core nums")
+	flag.IntVar(&second, "t", 1000, "ticker")
+	flag.IntVar(&sleep, "s", 200, "sleep")
+
+	flag.Parse()
+	runtime.GOMAXPROCS(num)
+
+	for i := 0; i < 3; i++ {
+		go func() {
+			ticker := time.NewTicker(time.Millisecond * time.Duration(second))
+			for {
+				select {
+				case <-ticker.C:
+					time.Sleep(time.Millisecond * time.Duration(sleep))
+				default:
+				}
+			}
+		}()
 	}
+
+	select {}
 }

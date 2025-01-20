@@ -1,12 +1,15 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	e := gin.Default()
-	e.GET("/get", func(c *gin.Context) {
+	e.POST("/get", func(c *gin.Context) {
+		fmt.Println(c.Request.RemoteAddr)
 		c.JSON(200, gin.H{
 			"message": "hello world",
 		})

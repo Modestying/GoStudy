@@ -1,6 +1,6 @@
 module github.com/Modestying/GoStudy
 
-go 1.23.0
+go 1.23
 
 replace github.com/Modestying/GoStudy v0.0.2 => ../GoStudy
 

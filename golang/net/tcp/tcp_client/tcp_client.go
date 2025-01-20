@@ -1,41 +1,22 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
+	"log"
 	"net"
+	"time"
 )
 
-func TcpConnect(address string) {
-	conn, err := net.Dial("tcp", address)
-	if err != nil {
-		panic(err)
-	}
-	writer := bufio.NewWriter(conn)
-	go func() {
-		for {
-			writer.Write([]byte("nihao"))
-		}
-	}()
-	reader := bufio.NewReader(conn)
-	for {
-		// lenData, err := reader.Peek(2)
-		// if err != nil {
-		// 	fmt.Println("read from server failed,error:", err)
-		// 	continue
-		// }
-		// fmt.Printf("收到server端发送的数据：%x\n", lenData)
-		// data := make([]byte, lenData[1])
-		data := make([]byte, 2)
-		n, err := reader.Read(data)
-		if err != nil {
-			fmt.Println("read from server failed,error:", err)
-			continue
-		}
-		fmt.Printf("收到server端发送的数据：%x\n", string(data[:n]))
-	}
-}
-
 func main() {
-	TcpConnect(":77")
+	log.Println("begin dial...")
+	conn, err := net.Dial("tcp", ":77")
+	if err != nil {
+		log.Println("dial error:", err)
+		return
+	}
+	log.Println("close ok")
+
+	conn.Write([]byte{0x01, 0x02})
+	time.Sleep(time.Second)
+	conn.Close()
+
 }

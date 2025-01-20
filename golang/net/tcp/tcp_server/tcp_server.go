@@ -1,31 +1,36 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"net"
+	"time"
 )
 
-var data []byte = []byte{0x01, 0x02}
+var data = []byte{0x01, 0x02}
 
 func process(conn net.Conn) {
-	defer conn.Close() //关闭连接
-	fmt.Println("connection success!")
-	reader := bufio.NewReader(conn)
+	defer func() {
+		fmt.Printf("Conn close:%s", conn.RemoteAddr())
+	}()
 	for {
-		var buf [128]byte
-		n, err := reader.Read(buf[:]) //读取数据
+		time.Sleep(time.Second * 2)
+		b := make([]byte, 2000)
+		_, err := conn.Read(b)
 		if err != nil {
 			fmt.Println("read from client failed,error:", err)
-			break
-		} else {
-			fmt.Println("success read!")
+			conn.Close()
+			return
 		}
-		recvStr := string(buf[:n])
-		fmt.Println("收到client端发送的数据：", recvStr)
-		conn.Write(data) //发送数据
 	}
 }
+
+/*
+615455 before send
+615628 send data
+
+615632 after send
+615682 send rst
+*/
 
 // StartTcpServer 启动httpServer
 func StartTcpServer(address string) {
